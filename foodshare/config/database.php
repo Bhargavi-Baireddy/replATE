@@ -1,11 +1,12 @@
 <?php
 /**
  * Database configuration class for FoodShare app
- * XAMPP default: localhost, root, no password, db: foodshare_db
+ * XAMPP MySQL port 3305
  */
 
 class Database {
     private $host = 'localhost';
+    private $port = 3305;
     private $db_name = 'foodshare_db';
     private $username = 'root';
     private $password = '';
@@ -15,13 +16,13 @@ class Database {
         $this->conn = null;
         
         try {
-$this->conn = new PDO("mysql:host=" . $this->host . ":3305;dbname=" . $this->db_name . ";charset=utf8mb4", $this->username, $this->password);
+            $this->conn = new PDO("mysql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->db_name . ";charset=utf8mb4", $this->username, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("DB Connection failed: " . $e->getMessage());
             http_response_code(500);
-            die("Database connection failed. Please check if MySQL is running and database exists. Error: " . $e->getMessage());
+            die("Database connection failed: " . $e->getMessage());
         }
         
         return $this->conn;
@@ -30,4 +31,5 @@ $this->conn = new PDO("mysql:host=" . $this->host . ":3305;dbname=" . $this->db_
 
 // Global instance
 $db = new Database();
+?>
 

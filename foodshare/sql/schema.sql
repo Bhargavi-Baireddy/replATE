@@ -6,7 +6,7 @@ CREATE DATABASE IF NOT EXISTS foodshare_db;
 USE foodshare_db;
 
 -- Users table (Donors, NGOs, Volunteers, Admin)
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
