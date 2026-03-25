@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Role Confirmed - replATE</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { 
+  font-family:'DM Sans',sans-serif; 
+  min-height:100vh; 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  background: linear-gradient(135deg, #3b82f6, #6366f1, #a855f7);
+  color: white; 
+}
+.card { 
+  background: rgba(255,255,255,0.95); 
+  backdrop-filter: blur(20px); 
+  border-radius: 28px; 
+  padding: 60px 50px; 
+  text-align:center; 
+  box-shadow: 0 30px 90px rgba(0,0,0,0.2); 
+  max-width: 450px; 
+  width: 90%; 
+}
+.icon { font-size: 64px; margin-bottom: 20px; display: block; animation: bounceIn 1s; }
+h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 900; margin-bottom: 12px; color: #1a1d23; }
+p { font-size: 16px; color: #6b7280; margin-bottom: 30px; line-height: 1.6; }
+.role-badge { 
+  display: inline-block; 
+  background: linear-gradient(135deg, #10b981, #059669); 
+  color: white; 
+  padding: 12px 30px; 
+  border-radius: 50px; 
+  font-size: 18px; 
+  font-weight: 700; 
+  margin-bottom: 24px; 
+  box-shadow: 0 10px 30px rgba(16,185,129,0.3); 
+}
+.redirecting { font-size: 14px; color: #9ca3af; }
+@keyframes bounceIn { 
+  0% { opacity:0; transform: scale(0.3); } 
+  50% { opacity:1; transform: scale(1.05); } 
+  70% { transform: scale(0.9); } 
+  100% { transform: scale(1); opacity:1; } 
+}
+@media (max-width: 600px) { 
+  .card { padding: 40px 30px; margin: 20px; } 
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <i class="fas fa-check-circle icon" style="color: #10b981;"></i>
+  <h1>Welcome to replATE!</h1>
+  <p>Your account has been created successfully. Redirecting to your role dashboard...</p>
+  <div class="role-badge" id="role-display">Loading role...</div>
+  <p class="redirecting">Redirecting in <span id="countdown">5</span> seconds...</p>
+</div>
+<script>
+const role = sessionStorage.getItem('tempRole') || 'your role';
+document.getElementById('role-display').textContent = role.charAt(0).toUpperCase() + role.slice(1) + ' Dashboard';
+let count = 5;
+const countdownEl = document.getElementById('countdown');
+const timer = setInterval(() => {
+  count--;
+  countdownEl.textContent = count;
+  if (count <= 0) {
+    clearInterval(timer);
+    const dashboardMap = {
+      'donor': 'dashboard-donor.html',
+      'ngo': 'dashboard-ngo.html',
+      'volunteer': 'dashboard-volunteer.html',
+      'admin': 'dashboard-admin.html'
+    };
+    window.location.href = dashboardMap[role] || 'dashboard-donor.html';
+  }
+}, 1000);
+// Set role from session on signup (set in JS before redirect)
+</script>
+</body>
+</html>

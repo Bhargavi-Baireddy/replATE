@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>replATE – Reduce Waste, Feed Lives</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+
+:root {
+  --text: #1A1D23;
+  --text-2: #6B7280;
+  --text-3: #9CA3AF;
+  --border: #E8ECF0;
+  --shadow: 0 4px 20px rgba(0,0,0,0.1);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.15);
+  --gradient: linear-gradient(135deg, #1a0d00, #2d1b00, #4a2f00, #663d00);
+  --gradient-flow: linear-gradient(135deg, #ee701d, #db721b, #e0dd0d, #f08b08);
+  --gold-light: #FFED4A;
+  --gold-orange: #FFA500;
+  --gold-shine: #FFD700;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:'DM Sans',sans-serif;
+min-height:100vh;
+overflow-y: auto;
+background: var(--gradient);
+background-size:400% 400%;
+animation:gradientFlow 18s infinite;
+color: var(--text);
+position: relative;
+}
+
+@keyframes gradientFlow{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+/* Bubbles Animation */
+.bubbles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -100px;
+  background: radial-gradient(circle at 30% 30%, var(--gold-shine) 0%, var(--gold-light) 30%, var(--gold-orange) 70%, transparent 80%);
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: float-up linear infinite;
+  box-shadow: 0 0 20px rgba(255, 237, 74, 0.5);
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(0) translateX(0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-120vh) translateX(50px) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Multiple bubble layers for density */
+.bubble:nth-child(1) { left: 10%; width: 8px; height: 8px; animation-duration: 35s; animation-delay: 0s; }
+.bubble:nth-child(2) { left: 20%; width: 12px; height: 12px; animation-duration: 42s; animation-delay: 2s; }
+.bubble:nth-child(3) { left: 30%; width: 6px; height: 6px; animation-duration: 38s; animation-delay: 5s; }
+.bubble:nth-child(4) { left: 40%; width: 10px; height: 10px; animation-duration: 45s; animation-delay: 8s; }
+.bubble:nth-child(5) { left: 50%; width: 7px; height: 7px; animation-duration: 40s; animation-delay: 12s; }
+.bubble:nth-child(6) { left: 60%; width: 11px; height: 11px; animation-duration: 48s; animation-delay: 15s; }
+.bubble:nth-child(7) { left: 70%; width: 9px; height: 9px; animation-duration: 36s; animation-delay: 18s; }
+.bubble:nth-child(8) { left: 80%; width: 5px; height: 5px; animation-duration: 44s; animation-delay: 22s; }
+.bubble:nth-child(9) { left: 90%; width: 13px; height: 13px; animation-duration: 39s; animation-delay: 26s; }
+.bubble:nth-child(10) { left: 15%; width: 4px; height: 4px; animation-duration: 50s; animation-delay: 30s; }
+.bubble:nth-child(11) { left: 35%; width: 14px; height: 14px; animation-duration: 37s; animation-delay: 1s; }
+.bubble:nth-child(12) { left: 55%; width: 6px; height: 6px; animation-duration: 46s; animation-delay: 4s; }
+.bubble:nth-child(13) { left: 75%; width: 10px; height: 10px; animation-duration: 41s; animation-delay: 7s; }
+.bubble:nth-child(14) { left: 5%; width: 8px; height: 8px; animation-duration: 43s; animation-delay: 10s; }
+.bubble:nth-child(15) { left: 25%; width: 12px; height: 12px; animation-duration: 49s; animation-delay: 13s; }
+.bubble:nth-child(16) { left: 45%; width: 7px; height: 7px; animation-duration: 34s; animation-delay: 16s; }
+.bubble:nth-child(17) { left: 65%; width: 11px; height: 11px; animation-duration: 47s; animation-delay: 19s; }
+.bubble:nth-child(18) { left: 85%; width: 9px; height: 9px; animation-duration: 40s; animation-delay: 23s; }
+.bubble:nth-child(19) { left: 95%; width: 5px; height: 5px; animation-duration: 45s; animation-delay: 27s; }
+.bubble:nth-child(20) { left: 18%; width: 13px; height: 13px; animation-duration: 38s; animation-delay: 31s; }
+
+body::after{
+content:"";
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(255,255,255,.85);
+backdrop-filter:blur(80px);
+z-index: 2;
+}
+
+.login-page{
+position:relative;
+z-index:10;
+display:flex;
+align-items:center;
+justify-content:center;
+min-height:100vh;
+padding: 20px;
+}
+
+.login-card{
+background:rgba(255,255,255,.95);
+padding:50px 40px;
+border-radius: var(--radius);
+width:100%;
+max-width:450px;
+box-shadow: var(--shadow-lg);
+border: 1px solid rgba(255,255,255,0.2);
+animation: fadeInUp 0.6s ease-out;
+margin-bottom: 20px;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.login-card h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--text);
+  background: var(--gradient-flow);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* tabs */
+
+.login-tabs{
+display:flex;
+gap:15px;
+margin-bottom:30px;
+background: rgba(255,255,255,0.8);
+border-radius: var(--radius-sm);
+padding: 5px;
+}
+
+.login-tab{
+flex:1;
+padding:14px 20px;
+border:none;
+border-radius: var(--radius-sm);
+cursor:pointer;
+font-weight:600;
+font-size: 16px;
+background: transparent;
+color: var(--text-2);
+transition: all 0.3s ease;
+position: relative;
+overflow: hidden;
+}
+
+.login-tab::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: var(--gradient-flow);
+  transition: left 0.3s ease;
+  z-index: -1;
+}
+
+.login-tab:hover::before {
+  left: 0;
+}
+
+.login-tab:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+/* forms */
+
+.login-form{display:none}
+.login-form.active{display:block; animation: slideIn 0.4s ease;}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.form-group{
+  margin-bottom:20px;
+  position: relative;
+}
+
+.form-group input,
+.form-group select{
+width:100%;
+padding:16px 16px 16px 50px;
+border-radius: var(--radius-sm);
+border:2px solid var(--border);
+font-size: 16px;
+transition: all 0.3s ease;
+background: rgba(255,255,255,0.9);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+  outline: none;
+}
+
+.form-group i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-3);
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.role-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.role-btn {
+  flex: 1;
+  min-width: 80px;
+  padding: 12px 16px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.9);
+  color: var(--text-2);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.role-btn:hover {
+  border-color: #6366f1;
+  background: rgba(99,102,241,0.1);
+  color: #6366f1;
+}
+
+.role-btn.selected {
+  border-color: #6366f1;
+  background: var(--gradient-flow);
+  color: white;
+}
+
+.form-group .toggle-password,
+.form-group .checkmark {
+  right: 16px;
+  left: auto;
+  cursor: pointer;
+}
+
+.form-group .checkmark {
+  color: #10b981; /* green */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.form-group .checkmark.show {
+  opacity: 1;
+}
+
+.form-group input:focus + i,
+.form-group select:focus + i {
+  color: #6366f1;
+}
+
+.sign-in-btn{
+width:100%;
+padding:16px;
+border:none;
+border-radius: var(--radius-sm);
+background: var(--gradient-flow);
+color:white;
+font-weight:600;
+font-size: 16px;
+cursor:pointer;
+transition: all 0.3s ease;
+box-shadow: var(--shadow);
+margin-top: 10px;
+}
+
+.sign-in-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+}
+
+.toast{
+position:fixed;
+bottom:30px;
+right:30px;
+background: linear-gradient(135deg, #ef4444, #dc2626);
+color:white;
+padding:15px 25px;
+border-radius: var(--radius-sm);
+opacity:0;
+transition:.3s;
+box-shadow: var(--shadow);
+z-index: 1000;
+}
+
+.toast.show{opacity:1}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 30px 20px;
+    margin: 20px;
+  }
+  .login-card h2 {
+    font-size: 24px;
+  }
+  .login-tab {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+  .form-group input,
+  .form-group select {
+    padding: 14px 14px 14px 45px;
+  }
+  .form-group i {
+    left: 14px;
+    font-size: 16px;
+  }
+  .role-btn {
+    min-width: 70px;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+  <!-- Bubbles Container -->
+  <div class="bubbles">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </div>
+
+  <h1>HELLO TEST</h1>
+
+
+<div class="login-page">
+
+<div class="login-card">
+
+<h2>replATE Login</h2>
+
+<div class="login-tabs">
+
+<button type="button"
+class="login-tab active"
+onclick="switchTab('login')">
+Login
+</button>
+
+<button type="button"
+class="login-tab"
+onclick="switchTab('signup')">
+Signup
+</button>
+
+</div>
+
+
+<!-- LOGIN -->
+
+<div id="login-form"
+class="login-form active">
+
+<div class="form-group">
+<input id="login-email"
+placeholder="Email">
+<i class="fas fa-envelope"></i>
+</div>
+
+<div class="form-group">
+<input id="login-password"
+placeholder="Password"
+type="password">
+<i class="fas fa-lock"></i>
+</div>
+
+<div class="form-group role-buttons">
+<button type="button" class="role-btn" data-role="donor">Donor</button>
+<button type="button" class="role-btn" data-role="ngo">NGO</button>
+<button type="button" class="role-btn" data-role="volunteer">Volunteer</button>
+<button type="button" class="role-btn" data-role="admin">Admin</button>
+<input type="hidden" id="login-role" value="">
+</div>
+
+<button
+class="sign-in-btn"
+onclick="submitAuth('login')">
+Login
+</button>
+
+</div>
+
+
+<!-- SIGNUP -->
+
+<div id="signup-form"
+class="login-form">
+
+<div class="form-group">
+<input id="signup-name"
+placeholder="Name">
+<i class="fas fa-user"></i>
+</div>
+
+<div class="form-group">
+<input id="signup-phone"
+placeholder="Phone">
+<i class="fas fa-phone"></i>
+</div>
+
+<div class="form-group">
+<input id="signup-email"
+placeholder="Email">
+<i class="fas fa-envelope"></i>
+</div>
+
+<div class="form-group">
+<input id="signup-password"
+type="password"
+placeholder="Password">
+<i class="fas fa-lock"></i>
+<i class="fas fa-eye toggle-password" data-target="signup-password"></i>
+</div>
+
+<div class="form-group">
+<input id="signup-confirm-password"
+type="password"
+placeholder="Confirm">
+<i class="fas fa-lock"></i>
+<i class="fas fa-eye toggle-password" data-target="signup-confirm-password"></i>
+<i class="fas fa-check checkmark" id="confirm-check"></i>
+</div>
+
+<div class="form-group role-buttons">
+<button type="button" class="role-btn" data-role="donor">Donor</button>
+<button type="button" class="role-btn" data-role="ngo">NGO</button>
+<button type="button" class="role-btn" data-role="volunteer">Volunteer</button>
+<button type="button" class="role-btn" data-role="admin">Admin</button>
+<input type="hidden" id="signup-role" value="">
+</div>
+
+<button
+class="sign-in-btn"
+onclick="submitAuth('signup')">
+Signup
+</button>
+
+</div>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+
+function switchTab(type){
+
+let login=document.getElementById("login-form")
+let signup=document.getElementById("signup-form")
+
+let tabs=document.querySelectorAll(".login-tab")
+
+tabs.forEach(t=>t.classList.remove("active"))
+
+if(type=="login"){
+login.classList.add("active")
+signup.classList.remove("active")
+tabs[0].classList.add("active")
+}
+
+if(type=="signup"){
+signup.classList.add("active")
+login.classList.remove("active")
+tabs[1].classList.add("active")
+// Scroll to signup form
+setTimeout(() => {
+  document.querySelector('.login-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}, 100);
+}
+
+}
+
+function showToast(msg){
+
+let t=document.getElementById("toast")
+
+t.innerText=msg
+
+t.classList.add("show")
+
+setTimeout(()=>{
+t.classList.remove("show")
+},3000)
+
+}
+
+
+function submitAuth(type){
+
+let email,password,role,name,phone, confirmPassword
+
+if(type=="login"){
+
+email=document.getElementById('login-email').value
+password=document.getElementById('login-password').value
+role=document.getElementById('login-role').value
+
+}else{
+
+name=document.getElementById('signup-name').value
+phone=document.getElementById('signup-phone').value
+email=document.getElementById('signup-email').value
+password=document.getElementById('signup-password').value
+confirmPassword=document.getElementById('signup-confirm-password').value
+role=document.getElementById('signup-role').value
+
+// Change button to signing up
+const btn = document.querySelector('#signup-form .sign-in-btn');
+btn.textContent = 'Signing up...';
+btn.disabled = true;
+btn.style.opacity = '0.7';
+
+}
+
+let body=
+"action="+type+
+"&email="+email+
+"&password="+password+
+"&role="+role+
+"&name="+(name||"")+
+"&phone="+(phone||"")
+
+fetch("login.php",{
+
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/x-www-form-urlencoded"
+},
+
+body:body
+
+})
+
+.then(r=>r.text())
+
+.then(d=>{
+
+if(d.trim()=="success"){
+
+        const rolePages = {
+          'donor': 'donor.html',
+          'ngo': 'ngo.php', 
+          'volunteer': 'volunteer.php',
+          'admin': 'admin.php'
+        };
+        location.href = rolePages[role] || 'index.html';
+
+}else{
+
+// Reset button for signup
+if(type === 'signup') {
+  const btn = document.querySelector('#signup-form .sign-in-btn');
+  btn.textContent = 'Signup';
+  btn.disabled = false;
+  btn.style.opacity = '1';
+}
+
+showToast("Invalid")
+
+}
+
+})
+
+}
+
+// Password visibility toggle
+function checkSignupComplete() {
+  const name = document.getElementById('signup-name').value.trim();
+  const phone = document.getElementById('signup-phone').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const password = document.getElementById('signup-password').value;
+  const confirmPassword = document.getElementById('signup-confirm-password').value;
+  const role = document.getElementById('signup-role').value;
+  
+  const btn = document.querySelector('#signup-form .sign-in-btn');
+  
+  if (name && phone && email && password && confirmPassword && role && password === confirmPassword) {
+    btn.textContent = 'Create Account';
+    btn.style.background = 'linear-gradient(135deg, #10b981, #34d399)';
+  } else {
+    btn.textContent = 'Signup';
+    btn.style.background = 'var(--gradient-flow)';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Add listeners for signup form validation
+  const signupFields = ['signup-name', 'signup-phone', 'signup-email', 'signup-password', 'signup-confirm-password', 'signup-role'];
+  signupFields.forEach(id => {
+    document.getElementById(id).addEventListener('input', checkSignupComplete);
+    document.getElementById(id).addEventListener('change', checkSignupComplete);
+  });
+  
+  const toggles = document.querySelectorAll('.toggle-password');
+  toggles.forEach(toggle => {
+    toggle.addEventListener('click', function() {
+      const targetId = this.getAttribute('data-target');
+      const input = document.getElementById(targetId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        this.classList.remove('fa-eye');
+        this.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        this.classList.remove('fa-eye-slash');
+        this.classList.add('fa-eye');
+      }
+    });
+  });
+
+  // Check password match
+  const password = document.getElementById('signup-password');
+  const confirmPassword = document.getElementById('signup-confirm-password');
+  const checkmark = document.getElementById('confirm-check');
+
+  function checkPasswordMatch() {
+    if (confirmPassword.value && password.value === confirmPassword.value) {
+      checkmark.classList.add('show');
+    } else {
+      checkmark.classList.remove('show');
+    }
+  }
+
+  confirmPassword.addEventListener('input', checkPasswordMatch);
+  password.addEventListener('input', checkPasswordMatch);
+
+  // Role button selection
+  const roleButtons = document.querySelectorAll('.role-btn');
+
+  roleButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      // Remove selected class from all buttons in the same group
+      const buttonGroup = this.parentNode;
+      const siblings = buttonGroup.querySelectorAll('.role-btn');
+      siblings.forEach(btn => btn.classList.remove('selected'));
+      // Add selected class to clicked button
+      this.classList.add('selected');
+      // Set the hidden input value
+      const hiddenInput = buttonGroup.querySelector('input[type="hidden"]');
+      hiddenInput.value = this.getAttribute('data-role');
+    });
+  });
+});
+
+window.onload=function(){
+
+switchTab("login")
+
+}
+
+</script>
+
+</body>
+</html>
+

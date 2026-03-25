@@ -1,0 +1,320 @@
+u<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NGO Dashboard – replATE</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="styles.css">
+<style>
+.page { display:flex; min-height:100vh; }
+.content-section { display:none; }
+.content-section.active { display:block; animation:fadeInUp .35s ease both; }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);} }
+.content { padding:28px; flex:1; }
+.filter-bar { display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap; }
+</style>
+</head>
+<body>
+<div class="page">
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="ngo-sidebar">
+    <div class="sidebar-logo">
+<div class="logo-icon"><img src="./logo.jpeg" alt="replATE" class="logo-img" style="width:100%;height:100%;object-fit:contain;border-radius:10px;"></div>
+      <span class="logo-text">replATE</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">NGO</div>
+      <div class="nav-item active" onclick="ngoNav(this,'sec-dash')"><i class="fas fa-th-large"></i> Dashboard</div>
+      <div class="nav-item" onclick="ngoNav(this,'sec-find')"><i class="fas fa-search"></i> Find Food</div>
+      <div class="nav-item" onclick="ngoNav(this,'sec-map')"><i class="fas fa-map-marker-alt"></i> Map View</div>
+      <div class="nav-item" onclick="ngoNav(this,'sec-claims')"><i class="fas fa-box-open"></i> My Claims</div>
+      <div class="nav-item" onclick="ngoNav(this,'sec-messages')"><i class="fas fa-comment"></i> Messages <span class="nav-badge">2</span></div>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="avatar" style="background:#8B5CF6">F</div>
+        <div class="uinfo"><div class="uname">Food Bank NGO</div><div class="urole">NGO</div></div>
+      </div>
+      <div class="nav-item" onclick="logout()" style="color:#EF4444"><i class="fas fa-sign-out-alt"></i> Logout</div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-wrap">
+    <div class="topbar">
+      <div class="topbar-search"><i class="fas fa-search" style="color:var(--text-3)"></i><input placeholder="Search food donations…"/></div>
+      <div class="topbar-right">
+        <div class="notif-wrap">
+          <div class="notif-btn" onclick="toggleNotif('ngo-notif')"><i class="fas fa-bell"></i><span class="notif-badge">2</span></div>
+          <div class="notif-dropdown" id="ngo-notif">
+            <div class="notif-header"><h3>Notifications</h3><a onclick="markAllRead('ngo-notif')">Mark all read</a></div>
+            <div class="notif-item"><div class="notif-dot"></div><div class="notif-content"><div class="title">New Donation Nearby 🍽️</div><div class="desc">Fresh Biryani available 0.5km away</div><div class="time">5 min ago</div></div></div>
+            <div class="notif-item"><div class="notif-dot"></div><div class="notif-content"><div class="title">Volunteer Assigned</div><div class="desc">John will pick up your claim soon</div><div class="time">20 min ago</div></div></div>
+          </div>
+        </div>
+        <div class="user-chip"><div class="avatar" style="background:#8B5CF6">F</div><div><div class="uname">Food Bank NGO</div><div class="urole">NGO</div></div></div>
+        <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="content-section active" id="sec-dash">
+        <div class="page-header">
+          <div class="page-title"><h2>NGO Dashboard 🏢</h2><p>Welcome back, Food Bank NGO!</p></div>
+          <button class="navigate-btn" onclick="ngoNav(document.querySelectorAll('#ngo-sidebar .nav-item')[1],'sec-find')"><i class="fas fa-search"></i> Find Food</button>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-info"><div class="label">Claims This Month</div><div class="value">38</div><div class="trend"><i class="fas fa-arrow-up"></i> +6 this week</div></div><div class="stat-icon" style="background:#EDE9FE;color:#8B5CF6"><i class="fas fa-box-open"></i></div></div>
+          <div class="stat-card"><div class="stat-info"><div class="label">Meals Received</div><div class="value">1,140</div><div class="trend"><i class="fas fa-arrow-up"></i> +180 this week</div></div><div class="stat-icon" style="background:#DCFCE7;color:#16A34A"><i class="fas fa-heart"></i></div></div>
+          <div class="stat-card"><div class="stat-info"><div class="label">Active Claims</div><div class="value">3</div><div class="trend"><i class="fas fa-circle" style="color:#16A34A;font-size:8px"></i> In transit</div></div><div class="stat-icon" style="background:#DBEAFE;color:#3B82F6"><i class="fas fa-truck"></i></div></div>
+          <div class="stat-card"><div class="stat-info"><div class="label">Nearby Now</div><div class="value">4</div><div class="trend"><i class="fas fa-map-marker-alt" style="color:var(--orange)"></i> Within 5km</div></div><div class="stat-icon" style="background:var(--orange-pale);color:var(--orange)"><i class="fas fa-map-marker-alt"></i></div></div>
+        </div>
+
+        <!-- Quick nearby cards -->
+        <div class="section-tag"><i class="fas fa-map-pin"></i> Nearby Donations</div>
+        <div class="food-grid">
+          <div class="food-card">
+              <div class="fc-img"><img src="https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Fresh Biriyani" style="width:100%;height:100%;object-fit:cover;"><div class="fc-dist">📍 0.5 km</div></div>
+              <div class="fc-body">
+                <div class="fc-name">Fresh Biryani</div>
+              <div class="fc-desc">50 servings of freshly prepared biryani. Vegetarian option available.</div>
+              <div class="fc-meta"><i class="fas fa-store"></i> Restaurant A <i class="fas fa-clock" style="margin-left:8px"></i> Exp 8PM</div>
+              <button class="claim-btn" onclick="claimFood('Fresh Biryani')"><i class="fas fa-hand-holding-heart"></i> Claim Now</button>
+            </div>
+          </div>
+          <div class="food-card">
+            <div class="fc-img"><img src="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Bakery Items" style="width:100%;height:100%;object-fit:cover;"><div class="fc-dist">📍 1.2 km</div></div>
+            <div class="fc-body">
+              <div class="fc-name">Bakery Items</div>
+              <div class="fc-desc">20 pieces of fresh breads and pastries from morning batch.</div>
+              <div class="fc-meta"><i class="fas fa-store"></i> Cafe Fresh <i class="fas fa-clock" style="margin-left:8px"></i> Exp 6PM</div>
+              <button class="claim-btn" onclick="claimFood('Bakery Items')"><i class="fas fa-hand-holding-heart"></i> Claim Now</button>
+            </div>
+          </div>
+          <div class="food-card">
+            <div class="fc-img"><img src="images/thali.jpg" alt="Lunch Thali" style="width:100%;height:100%;object-fit:cover;"><div class="fc-dist">📍 2.8 km</div></div>
+            <div class="fc-body">
+              <div class="fc-meta"><i class="fas fa-building"></i> Hotel Grand <i class="fas fa-clock" style="margin-left:8px"></i> Exp 4PM</div>
+              <div class="fc-desc">30 complete thali meals with rice, dal, and two sabzis.</div>
+              <button class="claim-btn" onclick="claimFood('Lunch Thalis')"><i class="fas fa-hand-holding-heart"></i> Claim Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FIND FOOD -->
+      <div class="content-section" id="sec-find">
+        <div class="page-header">
+          <div class="page-title"><h2>Find Food Near You 🍽️</h2><p>4 donations available nearby</p></div>
+          <button class="navigate-btn" onclick="ngoNav(document.querySelectorAll('#ngo-sidebar .nav-item')[2],'sec-map')"><i class="fas fa-map-marker-alt"></i> Map View</button>
+        </div>
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="filterFoodType(this,'all')">All</button>
+          <button class="filter-btn" onclick="filterFoodType(this,'cooked')">Cooked Meals</button>
+          <button class="filter-btn" onclick="filterFoodType(this,'bakery')">Bakery</button>
+          <button class="filter-btn" onclick="filterFoodType(this,'groceries')">Groceries</button>
+        </div>
+        <div class="food-grid" id="food-find-grid">
+          <div class="food-card" data-cat="cooked">
+            <div class="fc-img"><div class="fc-img-placeholder">🍛</div><div class="fc-dist">📍 0.5 km</div></div>
+            <div class="fc-body">
+              <div class="fc-name">Fresh Biryani</div>
+              <div class="fc-desc">50 servings of freshly prepared biryani. Expires at 8PM today.</div>
+              <div class="fc-meta"><i class="fas fa-store"></i> Restaurant A <i class="fas fa-users" style="margin-left:8px"></i> 50 servings</div>
+              <button class="claim-btn" onclick="claimFood('Fresh Biryani')"><i class="fas fa-hand-holding-heart"></i> Claim</button>
+            </div>
+          </div>
+          <div class="food-card" data-cat="bakery">
+            <div class="fc-img"><div class="fc-img-placeholder">🥐</div><div class="fc-dist">📍 1.2 km</div></div>
+            <div class="fc-body">
+              <div class="fc-name">Bakery Items</div>
+              <div class="fc-desc">20 fresh pastries and breads from morning batch.</div>
+              <div class="fc-meta"><i class="fas fa-store"></i> Cafe Fresh <i class="fas fa-users" style="margin-left:8px"></i> 20 pieces</div>
+              <button class="claim-btn" onclick="claimFood('Bakery Items')"><i class="fas fa-hand-holding-heart"></i> Claim</button>
+            </div>
+          </div>
+          <div class="food-card" data-cat="cooked">
+            <div class="fc-img"><div class="fc-img-placeholder">🍱</div><div class="fc-dist">📍 2.8 km</div></div>
+            <div class="fc-body">
+              <div class="fc-name">Lunch Thalis</div>
+              <div class="fc-desc">30 complete thali meals with rice, dal, and vegetables.</div>
+              <div class="fc-meta"><i class="fas fa-building"></i> Hotel Grand <i class="fas fa-users" style="margin-left:8px"></i> 30 servings</div>
+              <button class="claim-btn" onclick="claimFood('Lunch Thalis')"><i class="fas fa-hand-holding-heart"></i> Claim</button>
+            </div>
+          </div>
+          <div class="food-card" data-cat="groceries">
+            <div class="fc-img"><div class="fc-img-placeholder">🛒</div><div class="fc-dist">📍 3.5 km</div></div>
+            <div class="fc-body">
+              <div class="fc-name">Grocery Pack</div>
+              <div class="fc-desc">Mixed vegetables, grains, and pantry staples. Expiry: 2 days.</div>
+              <div class="fc-meta"><i class="fas fa-store"></i> Super Mart <i class="fas fa-users" style="margin-left:8px"></i> 15 packs</div>
+              <button class="claim-btn" onclick="claimFood('Grocery Pack')"><i class="fas fa-hand-holding-heart"></i> Claim</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAP VIEW -->
+<div class="content-section" id="sec-map">
+  <div class="page-header">
+    <div class="page-title">
+      <h2>Map View 🗺️</h2>
+      <p>Live GPS tracking of your location</p>
+    </div>
+  </div>
+
+  <!-- MAP CONTAINER -->
+  <div id="map" style="height:400px; width:100%; border-radius:12px;"></div>
+</div>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+// Initialize map
+var map = L.map('map').setView([16.5062, 80.6480], 13); // Default Vijayawada
+
+// Load OpenStreetMap tiles
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
+}).addTo(map);
+
+// Live GPS tracking
+let userMarker;
+
+if (navigator.geolocation) {
+  navigator.geolocation.watchPosition(position => {
+    const lat = position.coords.latitude;
+    const lng = position.coords.longitude;
+
+    map.setView([lat, lng], 15);
+
+    // Remove old marker
+    if (userMarker) {
+      map.removeLayer(userMarker);
+    }
+
+    // Add new marker
+    userMarker = L.marker([lat, lng]).addTo(map)
+      .bindPopup("📍 You are here")
+      .openPopup();
+
+  }, error => {
+    alert("Location access denied. Please allow location.");
+  });
+} else {
+  alert("Geolocation not supported");
+}
+
+// 🔥 Demo Donation Markers (for hackathon)
+L.marker([16.5065, 80.6485]).addTo(map)
+  .bindPopup("🍛 Fresh Biryani - 0.5km");
+
+L.marker([16.5080, 80.6500]).addTo(map)
+  .bindPopup("🥐 Bakery Items - 1.2km");
+
+L.marker([16.5100, 80.6520]).addTo(map)
+  .bindPopup("🍱 Lunch Thalis - 2.8km");
+</script>
+      <!-- CLAIMS -->
+      <div class="content-section" id="sec-claims">
+        <div class="page-header"><div class="page-title"><h2>My Claims 📋</h2><p>Track your claimed donations</p></div></div>
+        <div class="table-card">
+          <table>
+            <thead><tr><th>Food</th><th>Donor</th><th>Qty</th><th>Volunteer</th><th>Claimed On</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td><b>Extra Breakfast</b></td><td>University Hostel</td><td>100 pieces</td><td>John Volunteer</td><td style="color:var(--text-2)">Today</td><td><span class="badge in-transit">in transit</span></td></tr>
+              <tr><td><b>Party Leftovers</b></td><td>Catering Co</td><td>75 servings</td><td>Priya S</td><td style="color:var(--text-2)">Today</td><td><span class="badge delivered">delivered</span></td></tr>
+              <tr><td><b>Fresh Biryani</b></td><td>Restaurant A</td><td>50 servings</td><td>John Volunteer</td><td style="color:var(--text-2)">Yesterday</td><td><span class="badge delivered">delivered</span></td></tr>
+              <tr><td><b>Vegetable Curries</b></td><td>Restaurant A</td><td>30 servings</td><td>Raju K</td><td style="color:var(--text-2)">Mar 22</td><td><span class="badge delivered">delivered</span></td></tr>
+              <tr><td><b>Bread & Pastries</b></td><td>Bakery Fresh</td><td>40 pieces</td><td>Priya S</td><td style="color:var(--text-2)">Mar 20</td><td><span class="badge delivered">delivered</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MESSAGES -->
+      <div class="content-section" id="sec-messages">
+        <div class="page-header"><div class="page-title"><h2>Messages 💬</h2><p>Stay connected with donors & volunteers</p></div></div>
+        <div class="messages-layout">
+          <div class="chat-list">
+            <div class="chat-list-header">Conversations</div>
+            <div class="chat-item active" onclick="openChat(this,'Restaurant A','var(--orange)','R')">
+              <div class="chat-av" style="background:var(--orange)">R</div>
+              <div><div class="chat-name">Restaurant A</div><div class="chat-preview">Thanks for claiming!</div></div>
+              <div class="chat-time">5m</div>
+            </div>
+            <div class="chat-item" onclick="openChat(this,'John Volunteer','#3B82F6','J')">
+              <div class="chat-av" style="background:#3B82F6">J</div>
+              <div><div class="chat-name">John Volunteer</div><div class="chat-preview">I'm at the pickup location</div></div>
+              <div class="chat-time">12m</div>
+            </div>
+          </div>
+          <div class="chat-panel">
+            <div class="chat-header">
+              <div class="chat-header-info">
+                <div class="chat-av" id="chat-av" style="background:var(--orange);width:36px;height:36px;font-size:14px">R</div>
+                <div><div class="chat-header-name" id="chat-name">Restaurant A</div><div class="chat-header-status">● Online</div></div>
+              </div>
+              <div class="chat-header-actions">
+                <button class="chat-action-btn"><i class="fas fa-phone"></i></button>
+              </div>
+            </div>
+            <div class="chat-messages" id="ngo-chat-msgs">
+              <div class="msg-bubble received">Hi! We'd like to claim your Fresh Biryani donation 🙏<span class="msg-time">10:05 AM</span></div>
+              <div class="msg-bubble sent">Of course! 50 servings ready by 7 PM.<span class="msg-time">10:08 AM</span></div>
+              <div class="msg-bubble received">We'll send volunteer John for pickup. Thank you! ❤️<span class="msg-time">10:10 AM</span></div>
+            </div>
+            <div class="chat-input-area">
+              <input type="text" id="ngo-chat-input" placeholder="Type a message…" onkeydown="if(event.key==='Enter') sendMsg('ngo-chat-input','ngo-chat-msgs')"/>
+              <button class="send-btn" onclick="sendMsg('ngo-chat-input','ngo-chat-msgs')"><i class="fas fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3 id="modal-title">Confirm</h3>
+    <p id="modal-body" style="color:var(--text-2);font-size:14px;margin-bottom:20px;line-height:1.5"></p>
+    <div style="display:flex;gap:10px">
+      <button onclick="closeModal()" style="flex:1;padding:11px;border-radius:10px;border:1.5px solid var(--border);background:var(--white);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit">Cancel</button>
+      <button id="modal-confirm" style="flex:1;padding:11px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">Confirm</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toast-msg">Done!</span></div>
+
+<script src="app.js"></script>
+<script>
+function ngoNav(el, sectionId) {
+  document.querySelectorAll('#ngo-sidebar .nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+  const sec = document.getElementById(sectionId);
+  if (sec) sec.classList.add('active');
+}
+
+function filterFoodType(el, type) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('#food-find-grid .food-card').forEach(c => {
+    c.style.display = (type === 'all' || c.dataset.cat === type) ? 'block' : 'none';
+  });
+}
+</script>
+</body>
+</html>

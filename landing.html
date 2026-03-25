@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>replATE - Clean Interactive Landing</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #F97316;
+  --bg: linear-gradient(135deg, #FEFCE8 0%, #FEF3C7 50%, #FED7AA 100%);
+  --card: rgba(255, 255, 255, 0.9);
+  --text: #1F2937;
+  --text-muted: #6B7280;
+  --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  --shadow-hover: 0 35px 60px -12px rgba(0, 0, 0, 0.2);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  overflow-x: hidden;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* HEADER */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.logo-nav {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), #EA580C);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo-nav:hover {
+  transform: scale(1.05);
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--primary);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.cta-header {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--primary), #EA580C);
+  color: white;
+  border-radius: 50px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px rgba(249, 115, 22, 0.3);
+}
+
+.cta-header:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(249, 115, 22, 0.4);
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 120px;
+  position: relative;
+}
+
+.hero-content h1 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+  animation: fadeInUp 1s ease 0.2s both;
+}
+
+.hero-content p {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+  max-width: 600px;
+  animation: fadeInUp 1s ease 0.4s both;
+}
+
+.logo-hero {
+  width: clamp(200px, 40vw, 300px);
+  height: clamp(200px, 40vw, 300px);
+  margin: 0 auto 3rem;
+  animation: float 4s ease-in-out infinite;
+  cursor: pointer;
+  transition: transform 0.4s ease;
+}
+
+.logo-hero:hover {
+  transform: scale(1.05);
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 1s ease 0.6s both;
+}
+
+.btn-primary {
+  padding: 1.2rem 3rem;
+  background: linear-gradient(135deg, var(--primary), #EA580C);
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.btn-secondary {
+  padding: 1.2rem 3rem;
+  background: transparent;
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 1.1rem;
+  border: 2px solid var(--primary);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* FEATURES */
+.features {
+  padding: 120px 0;
+  background: rgba(255,255,255,0.5);
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.feature-card {
+  background: var(--card);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 2.5rem;
+  text-align: center;
+  transition: all 0.4s ease;
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+}
+
+.feature-card:hover {
+  transform: translateY(-12px);
+  box-shadow: var(--shadow-hover);
+}
+
+.feature-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(135deg, var(--primary), #EA580C);
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  color: white;
+  box-shadow: 0 15px 35px rgba(249,115,22,0.3);
+}
+
+.feature-card h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.feature-card p {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* FOOTER */
+.footer {
+  padding: 4rem 0 2rem;
+  text-align: center;
+  color: var(--text-muted);
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.social-link {
+  width: 50px;
+  height: 50px;
+  background: var(--card);
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  font-size: 1.3rem;
+  color: var(--text);
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+}
+
+.social-link:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-4px);
+}
+
+/* ANIMATIONS */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .nav-links { gap: 1rem; }
+  .cta-buttons { flex-direction: column; align-items: center; }
+  .btn-primary, .btn-secondary { width: 100%; max-width: 300px; }
+  .feature-grid { grid-template-columns: 1fr; }
+}
+
+/* SMOOTH SCROLL */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Dashboard Cards */
+.demo-card {
+  background: var(--card);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 2.5rem;
+  text-align: center;
+  transition: all 0.4s ease;
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.demo-card:hover {
+  transform: translateY(-12px);
+  box-shadow: var(--shadow-hover);
+}
+</style>
+</head>
+
+<body>
+<!-- NAV -->
+<header class="header">
+  <nav class="nav container">
+    <div class="logo-nav" onclick="scrollToTop()">replATE</div>
+    <ul class="nav-links">
+      <li><a href="#features" class="nav-link" onclick="smoothScroll('#features')">Features</a></li>
+      <li><a href="#demo" class="nav-link" onclick="smoothScroll('#demo')">Dashboards</a></li>
+      <li><a href="#contact" class="nav-link" onclick="smoothScroll('#contact')">Contact</a></li>
+    </ul>
+    <div style="display: flex; gap: 0.75rem; align-items: center;">     <button class="btn-secondary" style="padding: 0.6rem 1.2rem; font-size: 0.85rem; white-space: nowrap;" onclick="window.location.href='index.html'">replATE Login</button>      <button class="btn-secondary" style="padding: 0.6rem 1.2rem; font-size: 0.85rem; white-space: nowrap;" onclick="alert('Sign up functionality - coming soon!')">Sign Up</button>
+            <button class="cta-header" onclick="demoLogin('donor')">Try Demo</button></div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <img src="./logo.jpeg" alt="replATE Logo" class="logo-hero">
+      <h1>Reduce Waste.<br>Feed Lives.</h1>
+      <p>Join 12K+ restaurants, NGOs & volunteers already saving 3M+ meals from waste every month.</p>
+      <div class="cta-buttons">
+        <button class="btn-primary" onclick="demoLogin('donor')">
+          <i class="fas fa-donate"></i> Start Donating
+        </button>
+        <button class="btn-secondary" onclick="demoLogin('ngo')">
+          <i class="fas fa-hand-holding-heart"></i> Find Food
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="features">
+  <div class="container">
+    <h2 style="text-align: center; font-family: 'Plus Jakarta Sans'; font-size: 3rem; font-weight: 900; margin-bottom: 3rem; background: linear-gradient(var(--text), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      How it works
+    </h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-utensils"></i>
+        </div>
+        <h3>Post Surplus</h3>
+        <p>Restaurants post excess food with pickup times and locations in seconds.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-map-marked-alt"></i>
+        </div>
+        <h3>Find Nearby</h3>
+        <p>NGOs see real-time map of available food within their service area.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-bicycle"></i>
+        </div>
+        <h3>Volunteer Delivery</h3>
+        <p>Volunteers accept pickups and get navigation to donor & recipient.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO SECTION -->
+<section id="demo" style="padding: 120px 0; background: rgba(254, 243, 199, 0.5);">
+  <div class="container">
+<h2 style="text-align: center; font-family: 'Plus Jakarta Sans'; font-size: 2.5rem; margin-bottom: 3rem;">
+      Dashboards
+    </h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; justify-items: center;">
+      <div class="demo-card" style="min-width: 280px;">
+        <i class="fas fa-utensils" style="font-size: 3.5rem; background: linear-gradient(135deg, var(--primary), #EA580C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; display: block;"></i>
+        <h3 style="font-family: 'Plus Jakarta Sans'; font-size: 1.5rem; margin-bottom: 0.5rem;">Donor Dashboard</h3>
+        <p style="color: var(--text-muted);">Track donations & surplus food</p>
+        <button class="btn-primary" style="width: 100%; margin-top: 1.5rem; padding: 0.8rem;" onclick="demoLogin('donor')">Enter Dashboard</button>
+      </div>
+      <div class="demo-card" style="min-width: 280px;">
+        <i class="fas fa-hand-holding-heart" style="font-size: 3.5rem; background: linear-gradient(135deg, var(--primary), #EA580C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; display: block;"></i>
+        <h3 style="font-family: 'Plus Jakarta Sans'; font-size: 1.5rem; margin-bottom: 0.5rem;">NGO Dashboard</h3>
+        <p style="color: var(--text-muted);">Manage claims & distribution</p>
+        <button class="btn-primary" style="width: 100%; margin-top: 1.5rem; padding: 0.8rem;" onclick="demoLogin('ngo')">Enter Dashboard</button>
+      </div>
+      <div class="demo-card" style="min-width: 280px;">
+        <i class="fas fa-truck" style="font-size: 3.5rem; background: linear-gradient(135deg, var(--primary), #EA580C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; display: block;"></i>
+        <h3 style="font-family: 'Plus Jakarta Sans'; font-size: 1.5rem; margin-bottom: 0.5rem;">Volunteer Dashboard</h3>
+        <p style="color: var(--text-muted);">Pickup routes & deliveries</p>
+        <button class="btn-primary" style="width: 100%; margin-top: 1.5rem; padding: 0.8rem;" onclick="demoLogin('volunteer')">Enter Dashboard</button>
+      </div>
+      <div class="demo-card" style="min-width: 280px;">
+        <i class="fas fa-user-cog" style="font-size: 3.5rem; background: linear-gradient(135deg, var(--primary), #EA580C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; display: block;"></i>
+        <h3 style="font-family: 'Plus Jakarta Sans'; font-size: 1.5rem; margin-bottom: 0.5rem;">Admin Dashboard</h3>
+        <p style="color: var(--text-muted);">Platform analytics & management</p>
+        <button class="btn-primary" style="width: 100%; margin-top: 1.5rem; padding: 0.8rem;" onclick="demoLogin('admin')">Enter Dashboard</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact" class="footer">
+  <div class="container">
+    <div class="social-links">
+      <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+    </div>
+    <p>&copy; 2024 replATE. Feeding communities, reducing waste.</p>
+  </div>
+</footer>
+
+<script>
+function smoothScroll(target) {
+  document.querySelector(target).scrollIntoView({ behavior: 'smooth' });
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function demoLogin(role) {
+  const pages = {
+    donor: 'donor.html',
+    ngo: 'ngo.php',
+    volunteer: 'volunteer.php',
+    admin: 'admin.php'
+  };
+  window.location.href = pages[role] || pages.donor;
+}
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('.header');
+  if (window.scrollY > 100) {
+    header.style.background = 'rgba(255, 255, 255, 0.98)';
+    header.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
+  } else {
+    header.style.background = 'rgba(255, 255, 255, 0.95)';
+    header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.05)';
+  }
+});
+
+// Intersection Observer for animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.feature-card').forEach(card => {
+  observer.observe(card);
+});
+</script>
+</body>
+</html>
